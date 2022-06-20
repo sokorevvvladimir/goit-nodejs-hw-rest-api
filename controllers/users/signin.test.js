@@ -46,4 +46,28 @@ describe("test signIn function", () => {
     expect(result.data.user.email).toMatch("test@mail.com");
     expect(result.data.user.subscription).toMatch("starter");
   });
+
+  test("Unregistered user should not be able to login", async () => {
+    const req = {
+      body: {
+        email: "test@mail.com",
+        password: "qwerty123",
+      },
+    };
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn((data) => data),
+    };
+    const user = {
+      _id: "test-id",
+      email: "test@mail.com",
+      password: "qwerty123",
+      subscription: "starter",
+    };
+
+    jest.spyOn(User, "findOne").mockImplementationOnce(() => user);
+    jest.spyOn(bcrypt, "compareSync").mockImplementationOnce(() => false);
+
+    await expect(() => signIn(req, res)).rejects.toThrow();
+  });
 });
