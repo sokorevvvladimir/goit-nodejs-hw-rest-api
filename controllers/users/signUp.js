@@ -1,6 +1,7 @@
 const { User } = require("../../models");
 const bcrypt = require("bcryptjs");
 const gravatar = require("gravatar");
+const sendEmail = require("../../helpers");
 
 const signUp = async (req, res) => {
   const { name, email, password } = req.body;
@@ -16,6 +17,16 @@ const signUp = async (req, res) => {
   const avatarURL = gravatar.url(email);
 
   await User.create({ name, email, password: hashedPassword, avatarURL });
+
+  const msg = {
+    to: email,
+    subject: "Email verification",
+    text: "Please, verify your email",
+    html: "<h3>Please, verify your email</h3>",
+  };
+
+  sendEmail(msg);
+
   res.status(201).json({
     status: 201,
     user: {
