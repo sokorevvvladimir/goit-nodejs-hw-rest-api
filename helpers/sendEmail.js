@@ -16,12 +16,4 @@ const sendEmail = async (data) => {
   }
 };
 
-// const msg = {
-//   to: "sokorevvvladimir@gmail.com",
-//   from: "sokorevvvladimir@meta.ua",
-//   subject: "Sending with Twilio SendGrid is Fun",
-//   text: "and easy to do anywhere, even with Node.js",
-//   html: "<strong>and easy to do anywhere, even with Node.js</strong>",
-// };
-
 module.exports = sendEmail;
