@@ -20,6 +20,7 @@ describe("test signIn function", () => {
       email: "test@mail.com",
       password: "qwerty123",
       subscription: "starter",
+      verify: true,
     };
     const updatedUser = {
       _id: "test-id",

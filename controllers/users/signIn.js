@@ -14,12 +14,18 @@ const signIn = async (req, res) => {
     error.status = 401;
     throw error;
   }
+  if (!alreadyInDB.verify) {
+    const error = new Error("Email not verified. Please, verify your email.");
+    error.status = 401;
+    throw error;
+  }
 
   const payload = {
     id: alreadyInDB._id,
   };
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
   await User.findByIdAndUpdate(alreadyInDB._id, { token });
+
   return res.json({
     status: "success",
     code: 200,
